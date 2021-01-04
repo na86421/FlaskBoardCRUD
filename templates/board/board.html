@@ -8,23 +8,24 @@
     <table>
         <thead>
         <tr>
-            <td>번호</td>
-            <td>제목</td>
-            <td>작성자</td>
-            <td>날짜</td>
-            <td>조회수</td>
+            <th>번호</th>
+            <th>게시판이름</th>
         </tr>
         </thead>
         <tbody>
         <!-- 반복되는 구간 -->
         {% for names in board_list %}
-            {{ loop.index }}
-            <a href="/board_detail/{{ names.board_name }}">{{ names.board_name }}</a><br>
+            <tr>
+                <th>{{ loop.index }}</th>
+                <td><a href="/board_detail/{{ names.board_name }}">{{ names.board_name }}</a></td>
+            </tr>
         {% endfor %}
         <!-- 반복되는 구간 끝 -->
         </tbody>
     </table>
-    <a href="board_create">게시판 만들기</a>
+    <a href="board_create">게시판 만들기</a><br>
+    <a href="board_edit">게시판 수정</a><br>
+    <a href="board_delete">게시판 삭제</a>
 </head>
 <body>
 

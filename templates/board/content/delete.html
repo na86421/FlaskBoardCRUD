@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ board_name }}</title>
+    <h1>{{ board_name }}</h1>
+    <hr>
+
+    <table>
+        <thead>
+        <tr>
+            <th>삭제</th>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>날짜</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 반복되는 구간 -->
+        <form name="delete" action="delete" method="post" autocomplete="off">
+            {% for detail in board_detail %}
+                <tr>
+                    <th><input type="checkbox" name="delete[]" value="{{ detail.index }}"></th>
+                    <th>{{ loop.index }}</th>
+                    <td><a href="{{ detail.index }}">{{ detail.title }}</a></td>
+                    <td>{{ detail.name }}</td>
+                    <td>{{ detail.date }}</td>
+                </tr>
+            {% endfor %}
+        </form>
+        <!-- 반복되는 구간 끝 -->
+        </tbody>
+    </table>
+    <a href="javascript:void(0);" onclick="document.forms['delete'].submit();">삭제</a>
+</head>
+<body>
+
+</body>
+</html>

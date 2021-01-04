@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 수정</title>
+    <h1>게시판 수정</h1>
+    <hr>
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>게시판이름</th>
+            <th>수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <form name="board_edit" action="board_edit" method="post" autocomplete="off">
+        <!-- 반복되는 구간 -->
+        {% for board in board_list %}
+            <tr>
+                <th>{{ loop.index }}</th>
+                <input type="hidden" name="board_index[]" value="{{ board.index }}">
+                <td>{{ board.board_name }}</td>
+                <td><a href="/board_edit/{{ board.index }}">수정</a></td>
+            </tr>
+        {% endfor %}
+        <!-- 반복되는 구간 끝 -->
+        </form>
+        </tbody>
+    </table>
+</head>
+<body>
+
+</body>
+</html>

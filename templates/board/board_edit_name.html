@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 수정</title>
+    <h1>게시판 수정</h1>
+    <hr>
+    <form name="board_edit_name" action="/board_edit/{{ index }}" method="post" autocomplete="off">
+        {% for board in board_list %}
+            <input type="text" name="board_name" value ="{{ board.board_name }}" required>
+            <input type="submit" value="수정">
+        {% endfor %}
+    </form>
+</head>
+<body>
+</body>
+</html>
