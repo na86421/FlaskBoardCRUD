@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <h1>게시판</h1>
+    <hr>
+    <table>
+        <thead>
+        <tr>
+            <td>번호</td>
+            <td>제목</td>
+            <td>작성자</td>
+            <td>날짜</td>
+            <td>조회수</td>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 반복되는 구간 -->
+        {% for names in board_list %}
+            {{ loop.index }}
+            <a href="/board_detail/{{ names.board_name }}">{{ names.board_name }}</a><br>
+        {% endfor %}
+        <!-- 반복되는 구간 끝 -->
+        </tbody>
+    </table>
+    <a href="board_create">게시판 만들기</a>
+</head>
+<body>
+
+</body>
+</html>

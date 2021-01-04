@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ board_name }}</title>
+    <h1>{{ board_name }}</h1>
+    <hr>
+    <form name="board_content" action="/board_detail/{{ board_name }}/" method="post" autocomplete="off">
+        {% for content in board_content %}
+            <input type = "hidden" name="index" value="{{ content.index }}">
+            제목 : <input type="text" name="title" value="{{ content.title }}" required>
+            작성자 : <input type="text" name="name" value="{{ content.name }}" readonly><br><br>
+            내용 <br>
+            <textarea rows="15" cols="48" name="text" required>{{ content.text }}</textarea><br>
+        {% endfor %}
+        <input type="submit" value ="수정">
+    </form>
+</head>
+<body>
+
+</body>
+</html>
