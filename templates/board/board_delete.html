@@ -33,3 +33,11 @@
 
 </body>
 </html>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script type="text/javascript">
+            alert("{{messages[0]}}");
+            location.href="board_delete";
+        </script>
+    {% endif %}
+{% endwith %}
