@@ -17,10 +17,10 @@
         <!-- 반복되는 구간 -->
         {% for names in board_list.items %}
             <tr>
-                {% set loops = loop.index-1 %}
+                {% set loops = loop.index %}
                 <th>{{ loop.index }}</th>
                 <td><a href="/board_detail/{{ names.board_name }}">{{ names.board_name }}</a></td>
-                <td>{% for recents in recent_content[loops] %}{{ recents.title }} / {% endfor %}</td>
+                <td>{% for recents in recent_content[loops-1] %}{{ recents.title }} / {% endfor %}</td>
             </tr>
         {% endfor %}
         <!-- 반복되는 구간 끝 -->
