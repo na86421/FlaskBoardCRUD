@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_bcrypt import Bcrypt
 import redis
 
 app = Flask(__name__)
@@ -12,6 +13,7 @@ rd = redis.Redis(host='localhost', port=6379, db=0, charset="utf-8", decode_resp
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)  # migrate
+bcrypt = Bcrypt(app)
 
 from views.user import bp_user
 from views.board import bp_board
