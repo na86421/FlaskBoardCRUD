@@ -99,8 +99,18 @@ def logout():
 def board():
     if rd.get('id') is not None:  # 로그온 시에만 게시판 접근 가능
         board_list = Board.query.filter(Board.title == '-1').order_by(Board.index.asc())
+        #cnt = board_list.count()
+        recent_content = []
+        for recents in board_list:
+            recent_content.append(Board.query.filter(Board.title != '-1', Board.board_name == recents.board_name).order_by(Board.date.asc()).limit(5))
+        print(recent_content[0])
+        for i in recent_content[2]:
+            print(i.title)
+        page = request.args.get('page', type=int, default=1)
+        board_list = board_list.paginate(page, per_page=10)
 
-        return render_template('board/board.html', board_list=board_list)
+        #recent_content = Board.query.filter(Board.title != '-1').order_by(Board.date.asc()).limit(5*cnt)
+        return render_template('board/board.html', board_list=board_list, recent_content=recent_content)
     else:  # 로그아웃 상태일 시 로그인 페이지로 이동
         return redirect('/login')
 
@@ -128,16 +138,18 @@ def board_create():  # 게시판 생성 함수
 @app.route('/board_delete', methods=['GET', 'POST'])  # 게시판 삭제
 def board_delete():  # 게시판 삭제 함수
     if rd.get('id') is not None:
+        board_list = Board.query.filter(Board.title == '-1', Board.name == rd.get('id')).order_by(Board.index.asc())
+        page = request.args.get('page', type=int, default=1)
+        board_list = board_list.paginate(page, per_page=10)
         if request.method == 'POST':
             index = request.form.getlist('board_delete[]')
             for i in range(len(index)):
                 Board.query.filter(Board.index == index[i]).delete()
             db.session.commit()
             flash("게시판을 삭제하였습니다.")
-            return render_template('board/board_delete.html')
+            return render_template('board/board_delete.html', board_list=board_list)
             #return redirect('/board_delete')
 
-        board_list = Board.query.filter(Board.title == '-1', Board.name == rd.get('id')).order_by(Board.index.asc())
         return render_template('board/board_delete.html', board_list=board_list)
     else:
         return redirect('/login')
@@ -147,6 +159,8 @@ def board_delete():  # 게시판 삭제 함수
 def board_edit():
     if rd.get('id') is not None:
         board_list = Board.query.filter(Board.title == '-1', Board.name == rd.get('id')).order_by(Board.index.asc())
+        page = request.args.get('page', type=int, default=1)
+        board_list = board_list.paginate(page, per_page=10)
         return render_template('board/board_edit.html', board_list=board_list)
     else:
         return redirect('/login')
