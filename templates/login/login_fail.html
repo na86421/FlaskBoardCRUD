@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 실패</title>
+</head>
+<body>
+
+</body>
+</html>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script type="text/javascript">
+            alert("{{messages[0]}}");
+            location.href="login";
+        </script>
+    {% endif %}
+{% endwith %}
