@@ -5,7 +5,7 @@ from app import bcrypt
 
 bp_user = Blueprint('user', __name__, url_prefix='/')  # 라우팅을 위한 것
 
-
+#----------SignUp API----------
 @bp_user.route('/signup', methods=['GET', 'POST'])  # 회원가입
 def signup():  # POST를 이용해 db에 값 저장. SQLAlchemy ORM 쿼리 사용.
     if request.method == 'POST':
@@ -25,6 +25,7 @@ def signup():  # POST를 이용해 db에 값 저장. SQLAlchemy ORM 쿼리 사�
     return render_template('login/signup.html')
 
 
+#----------Login API----------
 @bp_user.route('/login', methods=['GET', 'POST'])  # 로그인
 def login():
     if request.method == 'POST':
@@ -53,6 +54,7 @@ def login():
         return render_template('login/login.html')
 
 
+#----------Logout API----------
 @bp_user.route('/logout')  # 로그아웃
 def logout():
     rd.delete('id')  # 세션 삭제

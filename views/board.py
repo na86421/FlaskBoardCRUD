@@ -7,6 +7,7 @@ from models.models import Board
 
 bp_board = Blueprint('board', __name__, url_prefix='/') # 라우팅을 위한 것
 
+#----------BoardRead API----------
 @bp_board.route('/board')  # 게시판 리스트
 def board():
     if rd.get('id') is not None:  # 로그온 시에만 게시판 접근 가능
@@ -22,6 +23,7 @@ def board():
         return redirect('/login')
 
 
+#----------BoardCreate API----------
 @bp_board.route('/board_create', methods=['GET', 'POST'])  # 게시판 생성
 def board_create():  # 게시판 생성 함수
     if rd.get('id') is not None:
@@ -44,6 +46,7 @@ def board_create():  # 게시판 생성 함수
         return redirect('/login')
 
 
+#----------BoardDelete API----------
 @bp_board.route('/board_delete', methods=['GET', 'POST'])  # 게시판 삭제
 def board_delete():  # 게시판 삭제 함수
     if rd.get('id') is not None:
@@ -64,6 +67,7 @@ def board_delete():  # 게시판 삭제 함수
         return redirect('/login')
 
 
+#----------BoardUpdate API----------
 @bp_board.route('/board_edit')  # 게시판 수정 가능 리스트
 def board_edit():
     if rd.get('id') is not None:
@@ -97,14 +101,17 @@ def board_edit_index(index):  # 게시판 수정 함수
         return redirect('/login')
 
 
-@bp_board.route('/board_detail/<board_name>/', methods=['GET', 'POST'])  # 게시판 글 리스트
+#----------BoardArticle API----------
+@bp_board.route('/board_detail/<board_name>/', methods=['GET', 'POST'])  #  글 리스트
 def board_detail(board_name):
     if rd.get('id') is not None:
+        # ----------BoardArticleRead API----------
         board_detail = Board.query.filter(Board.board_name == board_name, Board.title != '-1').order_by(
             Board.index.asc())
         page = request.args.get('page', type=int, default=1)
         board_detail = board_detail.paginate(page, per_page=10)
 
+        # ----------BoardArticleUpdate API----------
         if request.method == 'POST':  # 게시판 글 수정
             title = request.form['title']
             text = request.form['text']
@@ -134,6 +141,7 @@ def board_detail(board_name):
 @bp_board.route('/board_detail/<board_name>/<index>')  # 게시판 글 내용
 def board_detail_content(board_name, index):
     if rd.get('id') is not None:
+        # ----------BoardArticleRead API----------
         board_content = Board.query.filter(Board.board_name == board_name, Board.index == index)
         return render_template('board/content/board_content.html', board_name=board_name, board_content=board_content)
 
@@ -144,6 +152,7 @@ def board_detail_content(board_name, index):
 @bp_board.route('/board_detail/<board_name>/write', methods=['GET', 'POST'])  # 게시판 글 쓰기
 def write(board_name):
     if rd.get('id') is not None:
+        # ----------BoardArticleCreate API----------
         if request.method == 'POST':
             content_group = Board.query.filter(Board.board_name == board_name)
             for group in content_group:  # 게시판 생성시 글의 group 을 게시판의 group 과 일치시킴
@@ -164,6 +173,7 @@ def write(board_name):
 @bp_board.route('/board_detail/<board_name>/delete', methods=['GET', 'POST'])  # 게시판 글 삭제
 def delete(board_name):
     if rd.get('id') is not None:
+        # ----------BoardArticleDelete API----------
         board_detail = Board.query.filter(Board.board_name == board_name, Board.title != '-1',  # 글 삭제시 작성자만 삭제할 수 있게 쿼링
                                           Board.name == rd.get('id'))
         page = request.args.get('page', type=int, default=1)
