@@ -1,13 +1,14 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.min.css') }}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{ board_name }}</title>
-    <h1>{{ board_name }}</h1>
+    <p class="h1">{{ board_name }}</p>
     <hr>
 
-    <table>
-        <thead>
+    <table class="table table-striped">
+        <thead class="table-dark">
         <tr>
             <th>번호</th>
             <th>제목</th>
@@ -28,6 +29,7 @@
         <!-- 반복되는 구간 끝 -->
         </tbody>
     </table>
+    <hr>
     <ul class="pagination justify-content-center">
         <!-- 이전 페이지 -->
         {% if board_detail.has_prev %}
@@ -68,8 +70,9 @@
             </li>
         {% endif %}
     </ul>
-    <a href="write">글쓰기</a>
-    <a href="delete">글삭제</a>
+    <a href="write">글쓰기</a><br>
+    <a href="delete">글삭제</a><br>
+    <a href="/board">게시판 목록</a>
 </head>
 <body>
 </body>

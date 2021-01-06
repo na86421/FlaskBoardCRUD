@@ -1,18 +1,26 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.min.css') }}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>글쓰기</title>
+    <p class="h1">글쓰기</p>
+    <hr>
 </head>
 <body>
 
 <form name="write" action="/board_detail/{{ board_name }}/write" method="post" autocomplete="off">
-    <input type = "hidden" name="board_name" value="{{ board_name }}">
-    제목 : <input type="text" name="title" placeholder="제목을 입력해주세요." required>
-    작성자 : <input type="text" name="name" value="{{ id }}" readonly required><br><br>
-    내용  <br>
-    <textarea rows="15" cols="48" name="text" placeholder="내용을 입력해주세요." required></textarea><br>
-    <input type="submit" value="글쓰기"><br>
+    <div class="form-group col-3">
+        <input type="hidden" name="board_name" value="{{ board_name }}">
+        <label for="title">제목 : </label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요." required>
+        <label for="name">작성자 : </label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ id }}" readonly required>
+        <label for="text">내용 : </label>
+        <textarea rows="15" cols="48" class="form-control" id="text" name="text" placeholder="내용을 입력해주세요." required></textarea><br>
+        <input type="submit" class="btn btn-primary mb-2"  value="글쓰기"><br>
+        <a href="/board_detail/{{ board_name }}">글 목록</a>
+    </div>
 </form>
 </body>
 </html>
@@ -20,7 +28,7 @@
     {% if messages %}
         <script type="text/javascript">
             alert("{{messages[0]}}");
-            location.href="/board_detail/{{ board_name }}";
+            location.href = "/board_detail/{{ board_name }}";
         </script>
     {% endif %}
 {% endwith %}

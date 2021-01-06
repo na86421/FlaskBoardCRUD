@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.min.css') }}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,8 @@
     <title>게시판</title>
     <h1>게시판</h1>
     <hr>
-    <table>
-        <thead>
+    <table class="table table-striped">
+        <thead class="table-dark">
         <tr>
             <th>번호</th>
             <th>게시판이름</th>
@@ -15,7 +16,7 @@
         </thead>
         <tbody>
         <!-- 반복되는 구간 -->
-        {% for names in board_list.items %}
+        {% for names in board_list %}
             <tr>
                 {% set loops = loop.index %}
                 <th>{{ loop.index }}</th>
@@ -26,49 +27,11 @@
         <!-- 반복되는 구간 끝 -->
         </tbody>
     </table>
-    <ul class="pagination justify-content-center">
-        <!-- 이전 페이지 -->
-        {% if board_list.has_prev %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ board_list.prev_num }}">이전</a>
-            </li>
-        {% else %}
-            <li class="page-item disabled">
-                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-            </li>
-        {% endif %}
-        <!-- 중간 페이지 -->
-        {% for page_num in board_list.iter_pages() %}
-            {% if page_num %}
-                {% if page_num != board_list.page %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
-                    </li>
-                {% else %}
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">{{ page_num }}</a>
-                    </li>
-                {% endif %}
-            {% else %}
-                <li class="disabled">
-                    <a class="page-link" href="#">...</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-        <!-- 다음 페이지 -->
-        {% if board_list.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ board_list.next_num }}">다음</a>
-            </li>
-        {% else %}
-            <li class="page-item disabled">
-                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-            </li>
-        {% endif %}
-    </ul>
+    <hr>
     <a href="board_create">게시판 만들기</a><br>
     <a href="board_edit">게시판 수정</a><br>
-    <a href="board_delete">게시판 삭제</a>
+    <a href="board_delete">게시판 삭제</a><br>
+    <a href="login">메뉴로 이동</a>
 </head>
 <body>
 

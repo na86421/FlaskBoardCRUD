@@ -1,20 +1,26 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.min.css') }}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{ board_name }}</title>
-    <h1>{{ board_name }}</h1>
+    <p class="h1">{{ board_name }}</p>
     <hr>
     <form name="board_content" action="/board_detail/{{ board_name }}/" method="post" autocomplete="off">
-        {% for content in board_content %}
-            <input type = "hidden" name="index" value="{{ content.index }}">
-            제목 : <input type="text" name="title" value="{{ content.title }}" required>
-            작성자 : <input type="text" name="name" value="{{ content.name }}" readonly><br><br>
-            내용 <br>
-            <textarea rows="15" cols="48" name="text" required>{{ content.text }}</textarea><br>
-        {% endfor %}
-        <input type="submit" value ="수정">
+        <div class="form-group col-3">
+            {% for content in board_content %}
+                <input type="hidden" name="index" value="{{ content.index }}">
+                <label for="title">제목 : </label>
+                <input type="text" class="form-control" id="title" name="title" value="{{ content.title }}" required>
+                <label for="name">작성자 : </label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ content.name }}" readonly>
+                <label for="text">내용 : </label>
+                <textarea rows="15" cols="48" class="form-control" id="text" name="text" required>{{ content.text }}</textarea><br>
+            {% endfor %}
+            <input type="submit" class="btn btn-primary mb-2" value="수정">
+        </div>
     </form>
+    <a href="/board_detail/{{ board_name }}">글 목록</a>
 </head>
 <body>
 

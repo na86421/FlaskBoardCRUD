@@ -16,8 +16,6 @@ def board():
             recent_content.append(  # 각 게시판의 최근 5개의 글 쿼링
                 Board.query.filter(Board.title != '-1', Board.board_name == recents.board_name).order_by(
                     Board.date.desc()).limit(5))
-        page = request.args.get('page', type=int, default=1)  # page default value = 1
-        board_list = board_list.paginate(page, per_page=10)  # pagination
 
         return render_template('board/board.html', board_list=board_list, recent_content=recent_content)
     else:  # 로그아웃 상태일 시 로그인 페이지로 이동
@@ -30,13 +28,17 @@ def board_create():  # 게시판 생성 함수
         if request.method == 'POST':
             if rd.get('group') == None:  # 그룹_num 없을 경후 1 저장
                 rd.set('group', 1)
-            board_name = Board(board_name=request.form['board_name'], group=rd.get('group'), title='-1',
-                               name=rd.get('id'), text='-1', date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-            db.session.add(board_name)
-            db.session.commit()
-            rd.incr('group')  # 그룹_num 1 증가
-            flash("게시판을 생성하였습니다.")
-            return render_template('board/board_create.html')
+            if int(rd.get('group')) > 10 : # 게시판은 10개로 제한
+                flash("게시판은 10개 이상 생성할 수 없습니다.")
+                return render_template('board/board_create.html')
+            else :
+                board_name = Board(board_name=request.form['board_name'], group=rd.get('group'), title='-1',
+                                   name=rd.get('id'), text='-1', date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+                db.session.add(board_name)
+                db.session.commit()
+                rd.incr('group')  # 그룹_num 1 증가
+                flash("게시판을 생성하였습니다.")
+                return render_template('board/board_create.html')
         return render_template('board/board_create.html')
     else:
         return redirect('/login')
@@ -47,12 +49,12 @@ def board_delete():  # 게시판 삭제 함수
     if rd.get('id') is not None:
         board_list = Board.query.filter(Board.title == '-1', Board.name == rd.get('id')).order_by(
             Board.index.asc())  # 게시판 삭제시 생성자만 삭제할 수 있게 쿼링
-        page = request.args.get('page', type=int, default=1)
-        board_list = board_list.paginate(page, per_page=10)
+        page = request.args.get('page', type=int, default=1) # page default value = 1
+        board_list = board_list.paginate(page, per_page=10) # pagination
         if request.method == 'POST':
             index = request.form.getlist('board_delete[]')
             for i in range(len(index)):  # 선택된 갯수만큼 삭제
-                Board.query.filter(Board.index == index[i]).delete()
+                Board.query.filter(Board.index == index[i]).delete(synchronize_session='fetch')
             db.session.commit()
             flash("게시판을 삭제하였습니다.")
             return render_template('board/board_delete.html', board_list=board_list)
@@ -169,7 +171,7 @@ def delete(board_name):
         if request.method == 'POST':
             index = request.form.getlist('delete[]')
             for i in range(len(index)):
-                Board.query.filter(Board.board_name == board_name, Board.index == index[i]).delete()
+                Board.query.filter(Board.board_name == board_name, Board.index == index[i-1]).delete(synchronize_session='fetch')
             db.session.commit()
             flash("글을 삭제하였습니다.")
             return render_template('board/content/delete.html', board_name=board_name, board_detail=board_detail)

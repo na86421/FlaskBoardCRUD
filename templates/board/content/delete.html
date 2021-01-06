@@ -1,13 +1,14 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/bootstrap.min.css') }}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{{ board_name }}</title>
-    <h1>{{ board_name }}</h1>
+    <p class="h1">{{ board_name }}</p>
     <hr>
 
-    <table>
-        <thead>
+    <table class="table table-striped">
+        <thead class="table-dark">
         <tr>
             <th>삭제</th>
             <th>번호</th>
@@ -23,7 +24,7 @@
                 <tr>
                     <th><input type="checkbox" name="delete[]" value="{{ detail.index }}"></th>
                     <th>{{ loop.index }}</th>
-                    <td><a href="{{ detail.index }}">{{ detail.title }}</a></td>
+                    <td>{{ detail.title }}</td>
                     <td>{{ detail.name }}</td>
                     <td>{{ detail.date }}</td>
                 </tr>
@@ -32,6 +33,7 @@
         <!-- 반복되는 구간 끝 -->
         </tbody>
     </table>
+    <hr>
     <ul class="pagination justify-content-center">
         <!-- 이전 페이지 -->
         {% if board_detail.has_prev %}
@@ -72,7 +74,8 @@
             </li>
         {% endif %}
     </ul>
-    <a href="javascript:void(0);" onclick="document.forms['delete'].submit();">삭제</a>
+    <a href="javascript:void(0);" onclick="document.forms['delete'].submit();">삭제</a><br>
+    <a href="/board_detail/{{ board_name }}">글 목록</a>
 </head>
 <body>
 
