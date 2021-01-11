@@ -289,7 +289,7 @@ def write(board_name):
         # ----------BoardArticleCreate API----------
         if request.method == 'POST':
             content_group = Board.query.filter(Board.board_name == board_name)
-            for group in content_group:  # 게시판 생성시 글의 group 을 게시판의 group 과 일치시킴
+            for group in content_group:  # 글의 group 을 게시판의 group 과 일치시킴
                 group_num = group.group
             content = Board(board_name=board_name, group=group_num, title=request.form['title'],
                             name=request.form['name'], text=request.form['text'],
