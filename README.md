@@ -315,7 +315,7 @@ def delete(board_name):
         if request.method == 'POST':
             index = request.form.getlist('delete[]')
             for i in range(len(index)):
-                Board.query.filter(Board.board_name == board_name, Board.index == index[i-1]).delete(synchronize_session='fetch')
+                Board.query.filter(Board.board_name == board_name, Board.index == index[i]).delete(synchronize_session='fetch')
             db.session.commit()
             flash("글을 삭제하였습니다.")
             return render_template('board/content/delete.html', board_name=board_name, board_detail=board_detail)
