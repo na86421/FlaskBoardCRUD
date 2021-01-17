@@ -78,23 +78,23 @@ class Board(db.Model):  # 게시판 모델
 
 ### User API
 
-SignUp : Create a User.
-Login : User logs in.
-Logout : User logs out.
+SignUp : Create a User.   
+Login : User logs in.   
+Logout : User logs out.   
 
 
 ### Board API
 
-Create : Create a Board.
-Read : View Board lists.
-Update : Change a Board name.
-Delete : Delete a Board
+Create : Create a Board.   
+Read : View Board lists.   
+Update : Change a Board name.   
+Delete : Delete a Board.   
 
 
 
 ### BoardArticle API
 
-Create : Write a article.
-Read : View article lists.
-Update : Modify a article.
-Delete : Delete a article.
+Create : Write a article.   
+Read : View article lists.   
+Update : Modify a article.   
+Delete : Delete a article.   
