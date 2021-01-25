@@ -22,7 +22,7 @@
         <form name="delete" action="delete" method="post" autocomplete="off">
             {% for detail in board_detail.items %}
                 <tr>
-                    <th><input type="checkbox" name="delete[]" value="{{ detail.index }}"></th>
+                    <th><input type="checkbox" name="delete[]" value="{{  .index }}"></th>
                     <th>{{ loop.index }}</th>
                     <td>{{ detail.title }}</td>
                     <td>{{ detail.name }}</td>

@@ -42,7 +42,7 @@
             </li>
         {% endif %}
         <!-- 중간 페이지 -->
-        {% for page_num in board_detail.iter_pages() %}
+        {% for page_num in board_detail.iter_pages() %} <!-- 페이지 범위 -->
             {% if page_num %}
                 {% if page_num != board_detail.page %}
                     <li class="page-item">

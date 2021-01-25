@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, flash
 from app import db, rd
-from models.models import User
+from app.models.models import User
 from app import bcrypt
 
 bp_user = Blueprint('user', __name__, url_prefix='/')  # 라우팅을 위한 것

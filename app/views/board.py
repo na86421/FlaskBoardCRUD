@@ -3,7 +3,7 @@ import datetime
 from flask import Blueprint, request, render_template, redirect, flash
 
 from app import rd, db
-from models.models import Board
+from app.models.models import Board
 
 bp_board = Blueprint('board', __name__, url_prefix='/') # 라우팅을 위한 것
 
@@ -90,7 +90,7 @@ def board_edit_index(index):  # 게시판 수정 함수
                 update.board_name = board_name
             content_group = Board.query.filter(Board.group == group)  # 변경게시판의 그룹 넘버로 쿼링
             for group_update in content_group:
-                group_update.board_name = board_name  # 해당 게시판에 존재한 글의 board_name 같이 변경
+                group_update.board_name = board_name  # 해당 게시판에 존재한 글의 board_name 도 같이 변경
             db.session.commit()
             flash("게시판 이름을 변경하였습니다.")
             return render_template('board/board_edit_name.html')
